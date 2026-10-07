@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * The list of disposable e-mail domains, from the command line: no
+ * framework, no HTTP client needed.
+ *
+ *   vendor/bin/omniguard-disposable refresh [<file>]       # download the latest list; the package's own file by default
+ *   vendor/bin/omniguard-disposable check <e-mail or domain>... [--list <file>]
+ *
+ * A file inside vendor/ is put back by the next composer install: refresh a
+ * file of the application's (var/disposable_domains.txt) and point the
+ * gateway's list option at it - from a cron job, once a day or a week.
+ */
+
+use Omniguard\Disposable\DisposableGateway;
+use Omniguard\Disposable\DisposableList;
+use Omniguard\Exception\OmniguardException;
+
+// Composer's bin proxy says where its autoloader is; otherwise, where it would be.
+foreach ([$GLOBALS['_composer_autoload_path'] ?? '', getenv('OMNIGUARD_AUTOLOAD') ?: '', __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] as $autoload) {
+    if ('' !== $autoload && is_file($autoload)) {
+        require $autoload;
+        break;
+    }
+}
+if (!class_exists(DisposableList::class)) {
+    fwrite(\STDERR, "Cannot find Composer's autoloader.\n");
+    exit(2);
+}
+
+$args = array_slice($argv, 1);
+$list = null;
+if (false !== $i = array_search('--list', $args, true)) {
+    $list = $args[$i + 1] ?? null;
+    array_splice($args, $i, 2);
+}
+$command = array_shift($args);
+
+try {
+    switch ($command) {
+        case 'refresh':
+            $path = $args[0] ?? $list ?? (new DisposableList())->path;
+            $count = DisposableList::refresh($path);
+            printf("%d domains written to %s, from %s\n", $count, $path, DisposableList::SOURCE);
+            exit(0);
+        case 'check':
+            if (!$args) {
+                throw new InvalidArgumentException('Name an e-mail or a domain.');
+            }
+            $gateway = new DisposableGateway(null !== $list ? new DisposableList($list) : new DisposableList());
+            $disposable = 0;
+            foreach ($args as $address) {
+                $reputation = $gateway->lookup(new Omniguard\Model\Identity(email: str_contains($address, '@') ? $address : '@'.$address));
+                $disposable += (int) $reputation->known;
+                printf("%-40s %s\n", $address, $reputation->known ? 'disposable ('.$reputation->data['matched'].')' : 'not on the list');
+            }
+            exit($disposable ? 1 : 0);
+        default:
+            fwrite(\STDERR, "Usage: omniguard-disposable refresh [<file>]\n       omniguard-disposable check <e-mail or domain>... [--list <file>]\n");
+            exit(2);
+    }
+} catch (OmniguardException|RuntimeException|InvalidArgumentException $e) {
+    fwrite(\STDERR, $e->getMessage()."\n");
+    exit(2);
+}
