@@ -35,4 +35,4 @@ vendor/bin/omniguard-disposable check someone@mailinator.com --list var/disposab
 [Documentation](docs/index.md): the matching, the options, the refresh, the list's licence, what
 was verified.
 
-License: LGPL-3.0-or-later. The list itself (`data/domains.txt`): CC0 1.0, by its authors.
+License: MIT since 2026-10-09; earlier versions remain published under LGPL-3.0-or-later. The list itself (`data/domains.txt`): CC0 1.0, by its authors.
