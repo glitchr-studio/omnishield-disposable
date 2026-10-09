@@ -1,11 +1,11 @@
 <?php
 
-namespace Omniguard\Disposable;
+namespace Omnishield\Disposable;
 
-use Omniguard\Model\Capabilities;
-use Omniguard\Model\Identity;
-use Omniguard\Model\Reputation;
-use Omniguard\ReputationInterface;
+use Omnishield\Model\Capabilities;
+use Omnishield\Model\Identity;
+use Omnishield\Model\Reputation;
+use Omnishield\ReputationInterface;
 
 /**
  * Whether an e-mail's domain is a disposable one: the site's allow list

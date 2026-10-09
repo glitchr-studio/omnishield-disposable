@@ -5,20 +5,20 @@
  * The list of disposable e-mail domains, from the command line: no
  * framework, no HTTP client needed.
  *
- *   vendor/bin/omniguard-disposable refresh [<file>]       # download the latest list; the package's own file by default
- *   vendor/bin/omniguard-disposable check <e-mail or domain>... [--list <file>]
+ *   vendor/bin/omnishield-disposable refresh [<file>]       # download the latest list; the package's own file by default
+ *   vendor/bin/omnishield-disposable check <e-mail or domain>... [--list <file>]
  *
  * A file inside vendor/ is put back by the next composer install: refresh a
  * file of the application's (var/disposable_domains.txt) and point the
  * gateway's list option at it - from a cron job, once a day or a week.
  */
 
-use Omniguard\Disposable\DisposableGateway;
-use Omniguard\Disposable\DisposableList;
-use Omniguard\Exception\OmniguardException;
+use Omnishield\Disposable\DisposableGateway;
+use Omnishield\Disposable\DisposableList;
+use Omnishield\Exception\OmnishieldException;
 
 // Composer's bin proxy says where its autoloader is; otherwise, where it would be.
-foreach ([$GLOBALS['_composer_autoload_path'] ?? '', getenv('OMNIGUARD_AUTOLOAD') ?: '', __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] as $autoload) {
+foreach ([$GLOBALS['_composer_autoload_path'] ?? '', getenv('OMNISHIELD_AUTOLOAD') ?: '', __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] as $autoload) {
     if ('' !== $autoload && is_file($autoload)) {
         require $autoload;
         break;
@@ -51,16 +51,16 @@ try {
             $gateway = new DisposableGateway(null !== $list ? new DisposableList($list) : new DisposableList());
             $disposable = 0;
             foreach ($args as $address) {
-                $reputation = $gateway->lookup(new Omniguard\Model\Identity(email: str_contains($address, '@') ? $address : '@'.$address));
+                $reputation = $gateway->lookup(new Omnishield\Model\Identity(email: str_contains($address, '@') ? $address : '@'.$address));
                 $disposable += (int) $reputation->known;
                 printf("%-40s %s\n", $address, $reputation->known ? 'disposable ('.$reputation->data['matched'].')' : 'not on the list');
             }
             exit($disposable ? 1 : 0);
         default:
-            fwrite(\STDERR, "Usage: omniguard-disposable refresh [<file>]\n       omniguard-disposable check <e-mail or domain>... [--list <file>]\n");
+            fwrite(\STDERR, "Usage: omnishield-disposable refresh [<file>]\n       omnishield-disposable check <e-mail or domain>... [--list <file>]\n");
             exit(2);
     }
-} catch (OmniguardException|RuntimeException|InvalidArgumentException $e) {
+} catch (OmnishieldException|RuntimeException|InvalidArgumentException $e) {
     fwrite(\STDERR, $e->getMessage()."\n");
     exit(2);
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Omniguard\Disposable;
+namespace Omnishield\Disposable;
 
-use Omniguard\Exception\ProviderException;
-use Omniguard\Exception\UnreachableException;
-use Omniguard\Http\Answer;
+use Omnishield\Exception\ProviderException;
+use Omnishield\Exception\UnreachableException;
+use Omnishield\Http\Answer;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -98,7 +98,7 @@ final class DisposableList
             }
             $body = $answer->body;
         } else {
-            $body = @file_get_contents($source, false, stream_context_create(['http' => ['timeout' => 30, 'user_agent' => 'omniguard/disposable']]));
+            $body = @file_get_contents($source, false, stream_context_create(['http' => ['timeout' => 30, 'user_agent' => 'omnishield/disposable']]));
             if (false === $body) {
                 throw new UnreachableException('disposable', \sprintf('No answer from %s: %s', $source, error_get_last()['message'] ?? 'unknown error'));
             }

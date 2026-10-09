@@ -1,17 +1,17 @@
 ---
-title: omniguard/disposable
+title: omnishield/disposable
 order: 1
 ---
 
-# omniguard/disposable
+# omnishield/disposable
 
 ## Installation
 
 ```sh
-composer require omniguard/disposable
+composer require omnishield/disposable
 ```
 
-PHP 8.2 or later and `glitchr/omniguard`: nothing else. No HTTP client while a request runs; the
+PHP 8.2 or later and `glitchr/omnishield`: nothing else. No HTTP client while a request runs; the
 refresh uses the application's client when given one, PHP's own streams otherwise.
 
 ## The list
@@ -55,8 +55,8 @@ An identity without an e-mail is unknown.
 ## Refreshing
 
 ```sh
-vendor/bin/omniguard-disposable refresh [<file>]
-vendor/bin/omniguard-disposable check <e-mail or domain>... [--list <file>]     # exit 1 when one is disposable
+vendor/bin/omnishield-disposable refresh [<file>]
+vendor/bin/omnishield-disposable check <e-mail or domain>... [--list <file>]     # exit 1 when one is disposable
 ```
 
 ```php
@@ -74,5 +74,5 @@ at the file; a long-running worker reads the new list when it builds the gateway
 | | |
 |---|---|
 | The shipped list on real domains | **done on 2026-10-07**: mailinator.com, eu.yopmail.com, guerrillamail.com, 10minutemail.com disposable; gmail.com, outlook.fr, example.org, laposte.net, proton.me not |
-| The refresh | **done on 2026-10-07**: `vendor/bin/omniguard-disposable refresh` downloaded 9,205 domains with PHP's own streams, `check` read them |
+| The refresh | **done on 2026-10-07**: `vendor/bin/omnishield-disposable refresh` downloaded 9,205 domains with PHP's own streams, `check` read them |
 | The allow and deny lists, a list of the application's | by the tests |

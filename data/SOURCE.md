@@ -9,4 +9,4 @@ Its authors dedicated it to the public domain: [CC0 1.0 Universal](https://creat
 ("You can copy, modify, distribute and use the work, even for commercial purposes, all without
 asking permission"). It is copied here unchanged; thanks to its maintainers.
 
-`vendor/bin/omniguard-disposable refresh` downloads its latest state.
+`vendor/bin/omnishield-disposable refresh` downloads its latest state.

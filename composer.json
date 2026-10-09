@@ -1,16 +1,16 @@
 {
-    "name": "omniguard/disposable",
+    "name": "omnishield/disposable",
     "type": "library",
-    "description": "Omniguard Disposable: is this e-mail's domain a disposable one - the free disposable-email-domains list (CC0) shipped in the package, an allow list and a deny list of the site's, subdomains included; no call while a request runs, a command to refresh the list.",
+    "description": "Omnishield Disposable: is this e-mail's domain a disposable one - the free disposable-email-domains list (CC0) shipped in the package, an allow list and a deny list of the site's, subdomains included; no call while a request runs, a command to refresh the list.",
     "keywords": [
         "email",
         "disposable-email",
         "temporary-email",
         "blocklist",
         "antispam",
-        "omniguard"
+        "omnishield"
     ],
-    "homepage": "https://github.com/glitchr-studio/omniguard-disposable",
+    "homepage": "https://github.com/glitchr-studio/omnishield-disposable",
     "license": "MIT",
     "authors": [
         {
@@ -20,20 +20,20 @@
     ],
     "require": {
         "php": ">=8.2",
-        "glitchr/omniguard": "^1.0@dev"
+        "glitchr/omnishield": "^1.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0"
     },
     "suggest": {
-        "symfony/http-client": "Refreshing the list through the application's HTTP client (bin/omniguard-disposable works without it)"
+        "symfony/http-client": "Refreshing the list through the application's HTTP client (bin/omnishield-disposable works without it)"
     },
     "bin": [
-        "bin/omniguard-disposable"
+        "bin/omnishield-disposable"
     ],
     "autoload": {
         "psr-4": {
-            "Omniguard\\Disposable\\": ""
+            "Omnishield\\Disposable\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/",
@@ -42,7 +42,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Omniguard\\Disposable\\Tests\\": "Tests/"
+            "Omnishield\\Disposable\\Tests\\": "Tests/"
         }
     },
     "config": {

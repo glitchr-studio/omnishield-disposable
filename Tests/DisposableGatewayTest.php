@@ -1,14 +1,14 @@
 <?php
 
-namespace Omniguard\Disposable\Tests;
+namespace Omnishield\Disposable\Tests;
 
-use Omniguard\Disposable\DisposableGateway;
-use Omniguard\Disposable\DisposableGatewayFactory;
-use Omniguard\Disposable\DisposableList;
-use Omniguard\Exception\InvalidConfigException;
-use Omniguard\Exception\ProviderException;
-use Omniguard\Model\Identity;
-use Omniguard\Model\Reputation;
+use Omnishield\Disposable\DisposableGateway;
+use Omnishield\Disposable\DisposableGatewayFactory;
+use Omnishield\Disposable\DisposableList;
+use Omnishield\Exception\InvalidConfigException;
+use Omnishield\Exception\ProviderException;
+use Omnishield\Model\Identity;
+use Omnishield\Model\Reputation;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -60,7 +60,7 @@ final class DisposableGatewayTest extends TestCase
 
     public function testAListOfTheApplicationsAndARefreshWrittenInOneMove(): void
     {
-        $path = sys_get_temp_dir().'/omniguard-disposable-'.bin2hex(random_bytes(4)).'.txt';
+        $path = sys_get_temp_dir().'/omnishield-disposable-'.bin2hex(random_bytes(4)).'.txt';
         $lines = implode("\n", array_map(static fn (int $i) => 'spam'.$i.'.example', range(1, 1500)))."\n# a comment\n\nSPAM0.EXAMPLE\n";
         try {
             $count = DisposableList::refresh($path, new MockHttpClient(new MockResponse($lines)));

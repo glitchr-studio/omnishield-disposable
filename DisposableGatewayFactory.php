@@ -1,11 +1,11 @@
 <?php
 
-namespace Omniguard\Disposable;
+namespace Omnishield\Disposable;
 
-use Omniguard\Config;
-use Omniguard\Exception\InvalidConfigException;
-use Omniguard\GatewayFactory;
-use Omniguard\GatewayInterface;
+use Omnishield\Config;
+use Omnishield\Exception\InvalidConfigException;
+use Omnishield\GatewayFactory;
+use Omnishield\GatewayInterface;
 
 /**
  * Disposable e-mail domains: a list read from a file, no call.
@@ -23,9 +23,9 @@ final class DisposableGatewayFactory extends GatewayFactory
     protected function populate(Config $c): void
     {
         $c->defaults([
-            'omniguard.factory_name' => 'disposable',
-            'omniguard.factory_title' => 'Disposable e-mail domains',
-            'omniguard.required_options' => [],
+            'omnishield.factory_name' => 'disposable',
+            'omnishield.factory_title' => 'Disposable e-mail domains',
+            'omnishield.required_options' => [],
             'list' => null,
             'allow' => [],
             'deny' => [],
